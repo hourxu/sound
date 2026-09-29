@@ -1,0 +1,19 @@
+[
+  {
+    "id": "onthefloor",
+    "title": "On the floor",
+    "artist": "hour",
+    "path": "Onthefloor",
+    "video": "/songs/onthefloor/onthefloor.mp4",
+    "language": [
+      "Khmer"
+    ],
+    "search": "Onthefloor",
+    "local": true,
+    "stems": false,
+    "year": "2026",
+    "bpm": 120,
+    "gap": 0,
+    "tracksCount": 1
+  }
+]

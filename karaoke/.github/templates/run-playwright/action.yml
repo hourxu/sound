@@ -1,0 +1,39 @@
+# See https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+
+name: run-playwright
+description: 'Runs and stores artifacts of Playwright'
+
+inputs:
+  packagescript:
+    required: true
+    description: 'Script from package.json to run'
+  shard:
+    required: false
+    description: 'which shard to run'
+    default: '1'
+  shardTotal:
+    required: false
+    description: 'total number of shards'
+    default: '1'
+  project:
+    required: false
+    description: 'Playwright project (browser)'
+    default: 'chromium'
+
+runs:
+  using: 'composite'
+  steps:
+    - run: pnpm ${{ inputs.packagescript }} --shard=${{ inputs.shard }}/${{ inputs.shardTotal }} --project=${{ inputs.project }}
+      shell: bash
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: test-results-blob-${{ inputs.packagescript }}-${{ inputs.project }}-${{ inputs.shard }}
+        path: |
+          blob-report
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: test-results-report-${{ inputs.packagescript }}-${{ inputs.project }}-${{ inputs.shard }}
+        path: |
+          playwright-report
